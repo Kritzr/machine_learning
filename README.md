@@ -86,19 +86,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Seaborn](https://seaborn.pydata.org/) - for data visualization.
 - [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/index.php) - for datasets.
 
-```
-
-### Explanation of Sections:
-
-1. **Introduction**: Explains the purpose of the repo and provides a brief summary of the models implemented.
-2. **Models Implemented**: Lists the models that you’ve already built.
-3. **Setup and Installation**: Instructions on how to get the repository up and running, including dependencies and setup.
-4. **Usage**: How to run the models or use them, including code examples.
-5. **Data**: Information about the datasets used and any special requirements they might have.
-6. **Model Performance**: Explains the evaluation metrics used to test the models.
-7. **Contributing**: A call to action for others to contribute to the project.
-8. **Future Improvements**: Suggestions for what could be added in the future.
-9. **License**: Indicates the licensing details for the project.
-10. **Acknowledgments**: Credits the libraries and resources used.
-
-Feel free to customize the sections or add any additional details specific to your repository!
