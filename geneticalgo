@@ -1,0 +1,59 @@
+import numpy as np
+import random
+def distance_between_twopoints(p1,p2):
+    return np.sqrt((p1[0] - p2[0])**2+(p1[1] - p2[1])**2)
+#this is for the euclidian distance between two points
+
+def total_distance_ofpoints(path, points):
+    return sum(distance_between_twopoints(points[path[i]], points[path[i+1]]) for i in range(len(path)-1))
+
+def initialise_pop(size, num_points):
+    return [random.sample(range(num_points), num_points) for _ in range(size)]
+
+def fitness (population, points):
+    return [1/total_distance_ofpoints(ind,points) for ind in population]
+
+def selection(population, fitness_scores):
+    selected= random.choices(population, weights = fitness_scores, k=len(population))
+    return selected
+
+def crossover(parent1, parent2):
+    size = len(parent1)
+    start,end = sorted(random.sample(range(size),2))
+    child = [-1] *size
+    child[start:end] = parent1[start:end]
+    remaining = [item for item in parent2 if item not in child]
+    idx = 0
+    for i in range(size):
+        if child[i] == -1:
+            child[i] = remaining[idx]
+            idx += 1
+            
+    return child 
+
+def mutate(individual , mutation_rate =0.1):
+    if random.random() < mutation_rate:
+        i,j = random.sample(range(len(individual)),2)
+        individual[i], individual[j] = individual[j], individual[i]
+    return individual
+
+def genetics(points, population_size= 100, generations=500, mutation_rate=0.1):
+    num_points = len(points)
+    population = initialise_pop(population_size, num_points)
+    for _ in range(generations):
+        fitness_scores = fitness(population, points)
+        population = selection(population, fitness_scores)
+        next_generation =[]
+        for i in range (0, len(population),2):
+            parent1, parent2 = population[i], population[i+1]
+            child1, child2 = crossover(parent1, parent2), crossover(parent2, parent1)
+            next_generation.extend([mutate(child1,mutation_rate),mutate(child2, mutation_rate)])
+        population = next_generation
+    best_individual= min(population, key=lambda x:total_distance_ofpoints(x,points))
+    return best_individual, total_distance_ofpoints(best_individual, points)
+
+points = [(0,0), (3,5), (7,2), (4,8), (0,0)]
+
+best_path, min_distance = genetics(points)
+print("optimised path (index order):", best_path)
+print("minimum distance:", min_distance)
